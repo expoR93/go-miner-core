@@ -15,9 +15,9 @@ context for external events such as new work or shutdown.
 * **Parallel Hashing Engine:** Uses a **Static Range Partitioning** strategy to distribute the
 64-bit nonce search space across multiple CPU cores.
 * **Double-SHA256 Pipeline:** Optimized implementation of the Bitcoin PoW algorithm.
-* **Lock-Free Telemetry:** Utilizes `sync/atomic` for high-frequency stat updates, ensuring
-zero contention between the engine and the UI layer.  A `Stats()` method returns a
-snapshot (`WorkerStats`) suitable for polling from a TUI or web dashboard.
+* **Telemetry via atomics:** Uses `sync/atomic` to increment counters safely; a `Stats()` method
+returns a snapshot (`WorkerStats`) that can be polled by a UI layer.  The implementation
+is straightforward and easy to explain.
 * **Graceful Orchestration:** Full support for `context.Context` for safe, leak-free shutdowns.
 
 ## 🏗️ System Architecture

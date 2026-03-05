@@ -63,7 +63,31 @@ The returned `WorkerStats` struct contains total hashes, blocks found, uptime,
 and a calculated hash rate.
 
 ## 📊 Performance 
-Run the benchmarks to see the throughput on your machine:
-go test -bench=. -benchmem
+Run the benchmarks to see throughput and memory usage on your machine:
+
+```bash
+# run all benchmarks with memory statistics
+go test -run=^$ -bench=. -benchmem
+```
+
+A typical result on a modern laptop looks like:
+
+```
+goos: linux
+goarch: amd64
+pkg: github.com/expoR93/go-miner-core
+cpu: 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+BenchmarkPerformDoubleSHA256-3           1796482               675.8 ns/op      0 B/op           0 allocs/op
+BenchmarkCompactToBig-3                  5931331               234.5 ns/op    120 B/op           3 allocs/op
+BenchmarkIsBelowTarget-3                12348746               106.3 ns/op     64 B/op           1 allocs/op
+BenchmarkStats-3                        35038653                39.09 ns/op      0 B/op           0 allocs/op
+BenchmarkEngineMiner-3                         1        1110451578 ns/op       64000384 B/op     1000004 allocs/op
+```
+
+The library provides lightweight, focused benchmarks for the core hashing
+pipeline (`performDoubleSHA256`), target conversion, comparison logic, and a
+shared `miner` workload; you can extend them or add new ones as the engine
+evolves.
 
 Built for the Go-Miner Simulation Project.
+
